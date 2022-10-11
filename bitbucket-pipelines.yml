@@ -1,0 +1,23 @@
+pipelines:
+  custom:
+    playwright-web:
+      - step: &Test-Deploy
+          name: Test & Deploy
+          caches:
+            - docker
+            - gradle
+          script:
+            - docker build -t playwright-web .
+            - docker run playwright-web
+          after-script:
+            - pipe: atlassian/slack-notify:2.0.0
+              variables:
+                WEBHOOK_URL: "${WEBHOOK_URL}"
+                PRETEXT: "You have a new Test result for Gearbox :tada:"
+                MESSAGE: |
+                  - KYC Test execution has been completed!!
+                  - Please checkout test results at: ${REPORT_URL}
+                  - Branch: ${BITBUCKET_BRANCH}
+  branches:
+    ci-pipeline:
+      - step: *Test-Deploy

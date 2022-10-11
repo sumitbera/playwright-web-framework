@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.testng:testng:7.6.0'
+    implementation 'com.microsoft.playwright:playwright:1.24.1'
+    implementation 'info.cukes:cucumber-java:1.2.5'
+    testImplementation 'info.cukes:cucumber-junit:1.2.5'
+    testImplementation 'info.cukes:cucumber-picocontainer:1.2.5'
+    implementation 'com.google.code.gson:gson:2.7'
+    implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+    implementation 'com.epam.reportportal:agent-java-cucumber:5.1.0'
+}
+
+test {
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+    }
+    task playwright(type: Exec) {
+        executable='java'
+        args = ['-e']
+    }
+}

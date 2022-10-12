@@ -12,7 +12,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
+    build:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build -t playwright-web .
+    test:
+      - uses: actions/checkout@v3
+      - name: Run Playwright test
+        run: docker run playwright-web

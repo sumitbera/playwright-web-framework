@@ -1,22 +1,18 @@
-name: Docker Image CI
-
+name: Playwright web automation
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
-
-  build:
-
+  playwright_build_test:
     runs-on: ubuntu-latest
-
-    build:
+    name: Job to build and run docker test for playwright
+    steps:
+      #Build your docker image of playwright test
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Build Playwright Docker Image
       run: docker build -t playwright-web .
-    test:
-      - uses: actions/checkout@v3
-      - name: Run Playwright test
-        run: docker run playwright-web
+      #Run your docker image
+    - name: Run Playwright Tests
+      run: docker run playwright-web

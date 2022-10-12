@@ -10,19 +10,18 @@ jobs:
     name: Job to build and run docker test for playwright
     steps:
     - uses: actions/checkout@v3
+      #In this step, this action saves a list of existing images,
+      #the cache is created without them in the post run.
+      #It also restores the cache if it exists.
     - uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
-      #List docker images
-    - name: List docker images
-      id: docker_list
-      run: docker images
 
       #Build your docker image of playwright test
     - name: Build Playwright Docker Image
       id: docker_build
       run: docker build -t playwright-web .
 
-      #Run your docker image
+      #Run your playwright docker test
     - name: Run Playwright Tests
       id: docker_run
       run: docker run playwright-web

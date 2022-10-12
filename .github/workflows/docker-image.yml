@@ -11,8 +11,14 @@ jobs:
     steps:
       #Build your docker image of playwright test
     - uses: actions/checkout@v3
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      continue-on-error: true
+      
     - name: Build Playwright Docker Image
+      id: docker_build
       run: docker build -t playwright-web .
+
       #Run your docker image
     - name: Run Playwright Tests
+      id: docker_run
       run: docker run playwright-web

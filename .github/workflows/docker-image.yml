@@ -9,11 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     name: Job to build and run docker test for playwright
     steps:
-      #Build your docker image of playwright test
     - uses: actions/checkout@v3
     - uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
-      
+      #List docker images
+    - name: List docker images
+      id: docker_list
+      run: docker images
+
+      #Build your docker image of playwright test
     - name: Build Playwright Docker Image
       id: docker_build
       run: docker build -t playwright-web .
